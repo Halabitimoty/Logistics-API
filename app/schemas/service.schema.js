@@ -1,15 +1,16 @@
 const mongoose = require("mongoose");
+const paginate = require("mongoose-paginate-v2");
 
 const serviceshema = new mongoose.Schema(
   {
     customerId: {
       type: mongoose.Types.ObjectId,
-      ref: "customer",
+      ref: "user",
       required: true,
     },
     riderId: {
       type: mongoose.Types.ObjectId,
-      ref: "rider",
+      ref: "user",
       default: null,
     },
     address: {
@@ -36,6 +37,8 @@ const serviceshema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+serviceshema.plugin(paginate);
 
 const servicecollection = mongoose.model("service", serviceshema);
 

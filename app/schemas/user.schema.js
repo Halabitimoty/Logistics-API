@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const riderschema = new mongoose.Schema(
+const userschema = new mongoose.Schema(
   {
     fullname: {
       type: String,
@@ -15,10 +15,15 @@ const riderschema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    role: {
+      type: String,
+      enum: ["rider", "customer"],
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
-const ridercollection = mongoose.Collection("rider", riderschema);
+const usercollection = mongoose.Collection("user", userschema);
 
-module.exports = { ridercollection };
+module.exports = { usercollection };

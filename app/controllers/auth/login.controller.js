@@ -1,19 +1,19 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const { loginval } = require("../../schemas/joischema/user.val");
 const { usercollection } = require("../../schemas/user.schema");
+const { loginval } = require("../../schemas/joischema/auth.schema.val");
 
 require("dotenv").config();
 
 const login = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    await loginval.validateAsync({ username, password });
+    await loginval.validateAsync({ email, password });
 
     const userdetails = await usercollection
-      .findOne({ username })
+      .findOne({ email })
       .maxTimeMS(20000);
 
     if (!userdetails) {
