@@ -19,6 +19,7 @@ const authroute = require("./app/routes/auth.route");
 const { usersocket } = require("./app/middlewares/usersocket");
 const {
   connecteduser,
+  sendmessage,
 } = require("./app/controllers/socket/connectedusersocket");
 
 database
@@ -47,6 +48,7 @@ app.get("/", (req, res) => {
 io.use(usersocket);
 io.on("connection", async (socket) => {
   connecteduser(socket);
+  sendmessage(socket);
 });
 
 httpserver.listen(port, () => {

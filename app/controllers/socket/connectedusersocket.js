@@ -21,4 +21,17 @@ const onlineuser = async (socket) => {
   socket.broadcast.emit("user-online", `${onlineUser.fullname} is online`);
 };
 
-module.exports = { connecteduser, onlineuser };
+const sendmessage = (socket) => {
+  socket.on("send-message", (payload, callback) => {
+    console.log(payload);
+    socket.to(payload.sendTo).emit("new-message", {
+      message: payload.message,
+    });
+    callback({
+      successful: true,
+      message: "Sent Successfully",
+    });
+  });
+};
+
+module.exports = { connecteduser, onlineuser, sendmessage };
