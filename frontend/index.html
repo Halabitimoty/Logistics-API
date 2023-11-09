@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;700&family=Poppins:ital,wght@0,500;1,400;1,500&family=Red+Rose:wght@300;400;500&family=Roboto&family=Ubuntu:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <title>Logistic API</title>
+
+    <style>
+        body {
+            background-color: #183D3D;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin: 100px auto;
+            width: 100%;
+            max-width: 750px;
+            gap: 1.2rem;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        form>input,
+        form>select,
+        form>button {
+            border: 5px solid #B9B4C7;
+            padding: 1em;
+            border-radius: 5px;
+        }
+
+        form>button {
+            background-color: #940B92;
+            color: #fff;
+        }
+
+        form>button:hover {
+            background-color: #DA0C81;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <input type="text" name="address" id="address" placeholder="address">
+        <input type="text" name="destaddress" id="destaddress" placeholder="destination address">
+        <input type="number" name="item-weight" id="item-weight" placeholder="item weight">
+        <input type="number" name="item-cost" id="item-cost" placeholder="cost of shipping" value="1000">
+        <select name="shipping request" id="shipping-request">
+            <option value="pending">pending</option>
+            <option value="submitted">submitted</option>
+        </select>
+        <button>Submit</button>
+    </form>
+</body>
+
+</html>
