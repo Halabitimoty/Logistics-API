@@ -50,7 +50,7 @@ io.use(usersocket);
 io.on("connection", async (socket) => {
   connecteduser(socket);
   sendmessage(socket);
-  socket.on("disconnect", disconnecteduser);
+  socket.on("disconnect", disconnecteduser(socket));
 });
 
 httpserver.listen(port, () => {
