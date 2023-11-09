@@ -73,7 +73,9 @@
         </select>
         <button id="shipping-button">Submit</button>
     </form>
-
+    <script src="/Logistics-API/node_modules/socket.io/client-dist/socket.io.js">
+        const socket = io();
+    </script>
     <script>
         const login = document.querySelector("#login");
         const password = document.querySelector("#password");
