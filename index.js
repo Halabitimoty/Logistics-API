@@ -16,6 +16,10 @@ const port = process.env.PORT || 3000;
 const database = mongoose.connect(process.env.MONGO_DB_URL);
 
 const authroute = require("./app/routes/auth.route");
+const { usersocket } = require("./app/middlewares/usersocket");
+const {
+  connecteduser,
+} = require("./app/controllers/socket/connectedusersocket");
 
 database
   .then(() => {
@@ -40,15 +44,9 @@ app.get("/", (req, res) => {
   res.sendFile(join(__dirname, "frontend/index.html"));
 });
 
-io.on("connection", (socket) => {
-  console.log("a user connected", socket.id);
-
-  socket.on("shppings", (payload, callback) => {
-    console.log({ msg });
-  });
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
-  });
+io.use(usersocket);
+io.on("connection", async (socket) => {
+  connecteduser(socket);
 });
 
 httpserver.listen(port, () => {
