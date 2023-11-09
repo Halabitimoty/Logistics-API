@@ -20,6 +20,7 @@ const { usersocket } = require("./app/middlewares/usersocket");
 const {
   connecteduser,
   sendmessage,
+  disconnecteduser,
 } = require("./app/controllers/socket/connectedusersocket");
 
 database
@@ -49,6 +50,7 @@ io.use(usersocket);
 io.on("connection", async (socket) => {
   connecteduser(socket);
   sendmessage(socket);
+  socket.on("disconnect", disconnecteduser());
 });
 
 httpserver.listen(port, () => {
