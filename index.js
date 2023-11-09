@@ -50,7 +50,12 @@ io.use(usersocket);
 io.on("connection", async (socket) => {
   connecteduser(socket);
   sendmessage(socket);
-  // socket.on("disconnect", disconnecteduser(socket.id));
+});
+
+const login = io.of("/v1/auth/login");
+login.use(usersocket).on("connection", async (socket) => {
+  connecteduser(socket);
+  sendmessage(socket);
 });
 
 httpserver.listen(port, () => {
