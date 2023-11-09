@@ -34,10 +34,9 @@ const sendmessage = (socket) => {
   });
 };
 
-const disconnecteduser = async (socket) => {
-  const socketId = socket.id;
+const disconnecteduser = async (params) => {
   await connectedusercollection.findOneAndDelete({
-    socketId: socketId,
+    socketId: params,
   });
 };
 module.exports = { connecteduser, onlineuser, sendmessage, disconnecteduser };
