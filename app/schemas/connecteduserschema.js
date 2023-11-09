@@ -1,9 +1,13 @@
 const mongoose = require("mongoose");
 
 const connectedusershema = new mongoose.Schema({
-  userid: {
+  userId: {
     type: mongoose.Types.ObjectId,
     ref: "user",
+    required: true,
+  },
+  socketId: {
+    type: String,
     required: true,
   },
 });
