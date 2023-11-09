@@ -55,8 +55,25 @@
             <option value="pending">pending</option>
             <option value="submitted">submitted</option>
         </select>
-        <button>Submit</button>
+        <button id="shipping-button">Submit</button>
     </form>
+
+    <script>
+        const address = document.querySelector("#address");
+        const destaddress = document.querySelector("#destaddress");
+        const itemweight = document.querySelector("#item-weight");
+        const itemcost = document.querySelector("#item-cost");
+        const shippingrequest = document.querySelector("#shipping-request");
+        const shippingbutton = document.querySelector("#shipping-button");
+
+        shippingbutton.addEventListener("click", async () => {
+            try {
+
+            } catch (error) {
+
+            }
+        })
+    </script>
 </body>
 
 </html>
