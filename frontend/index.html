@@ -12,6 +12,12 @@
     <title>Logistic API</title>
 
     <style>
+        h2 {
+            color: #fff;
+            border-bottom: 2px solid #940B92;
+            padding-bottom: 2em;
+        }
+
         body {
             background-color: #183D3D;
         }
@@ -46,7 +52,17 @@
 </head>
 
 <body>
+
+    <form action="" method="post">
+        <h2>Login</h2>
+        <input type="email" name="login" id="login" placeholder="example@example.com">
+        <input type="password" name="password" id="password" placeholder="********">
+        <button id="login-button">Login</button>
+    </form>
+
+
     <form action="">
+        <h2>Request for shipping</h2>
         <input type="text" name="address" id="address" placeholder="address">
         <input type="text" name="destaddress" id="destaddress" placeholder="destination address">
         <input type="number" name="item-weight" id="item-weight" placeholder="item weight">
@@ -59,18 +75,36 @@
     </form>
 
     <script>
+        const login = document.querySelector("#login");
+        const password = document.querySelector("#password");
         const address = document.querySelector("#address");
         const destaddress = document.querySelector("#destaddress");
         const itemweight = document.querySelector("#item-weight");
         const itemcost = document.querySelector("#item-cost");
         const shippingrequest = document.querySelector("#shipping-request");
         const shippingbutton = document.querySelector("#shipping-button");
+        const loginbutton = document.querySelector("#login-button");
 
-        shippingbutton.addEventListener("click", async () => {
+        loginbutton.addEventListener("click", async () => {
             try {
+                event.preventDefault()
+                const res = await fetch("http://localhost:3002/v1/auth/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }, body: JSON.stringify({
+                        email: email.value,
+                        password: password.value
+                    })
 
+                })
+
+                const data = await res.json();
+
+                console.log(data)
             } catch (error) {
-
+                alert("An error occurred!");
+                console.log(error);
             }
         })
     </script>

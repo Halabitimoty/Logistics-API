@@ -2,8 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const logger = require("morgan");
-const { Server } = require("socket.io");
 const { createServer } = require("node:http");
+const { Server } = require("socket.io");
+const { join } = require("node:path");
 
 require("dotenv").config();
 
@@ -38,7 +39,11 @@ app.use("/v1/auth", authroute);
 io.use(usersocket);
 
 app.get("/", (req, res) => {
-  res.send("Logistic API");
+  res.sendFile(join(__dirname, "frontend/index.html"));
+});
+
+io.on("connection", (socket) => {
+  console.log("a user connected");
 });
 
 httpserver.listen(port, () => {
