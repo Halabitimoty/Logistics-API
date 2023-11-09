@@ -8,7 +8,7 @@ const { registerval } = require("../../schemas/joischema/auth.schema.val");
 const register = async (req, res) => {
   try {
     const { fullname, email, password } = req.body;
-    const { role } = req.role;
+    const { role } = req.header;
 
     await registerval.validateAsync({
       fullname,
@@ -35,7 +35,7 @@ const register = async (req, res) => {
     await usercollection.create({
       fullname,
       email,
-      hashedpassword,
+      password: hashedpassword,
       role: role.toLowerCase(),
     });
 
