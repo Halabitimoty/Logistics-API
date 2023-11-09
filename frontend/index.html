@@ -61,8 +61,9 @@
     </form>
 
 
-    <form action="" method="post">
+    <form action="">
         <h2>Request for shipping</h2>
+        <p id="message" style="color: #fff;">hiiii</p>
         <input type="text" name="address" id="address" placeholder="address">
         <input type="text" name="destaddress" id="destaddress" placeholder="destination address">
         <input type="number" name="item-weight" id="item-weight" placeholder="item weight">
@@ -85,6 +86,7 @@
         const shippingrequest = document.querySelector("#shipping-request");
         const shippingbutton = document.querySelector("#shipping-button");
         const loginbutton = document.querySelector("#login-button");
+        const message = document.querySelector("#message");
 
         loginbutton.addEventListener("click", async (event) => {
             try {
@@ -119,6 +121,11 @@
                 shippingrequest: shippingrequest.value
             })
 
+        })
+        socket.on('shppings', (msg) => {
+            const serve = document.createElement("li");
+            serve.textContent = msg;
+            message.appendChild(serve)
         })
     </script>
 </body>

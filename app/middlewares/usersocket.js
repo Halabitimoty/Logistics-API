@@ -1,15 +1,17 @@
+const { iosocketmiddleware } = require("./iosocket");
+
 const usersocket = (socket, next) => {
   const token = socket.request.headers.auth;
 
-  const { error, user } = ioAuthController(token);
+  const { error, user } = iosocketmiddleware(token);
 
   if (error)
-    return socket.emit(
-      "error",
-      "an error occurred while trying to authenticate"
-    );
+    return socket.emit({
+      error: error,
+      message: "an error occurred while trying to authenticate",
+    });
 
-  socket.request.userDetails = user;
+  socket.request.userdetails = user;
 
   next();
 };
