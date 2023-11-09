@@ -9,7 +9,7 @@ const connecteduser = async (socket) => {
   const userdetails = socket.request.userdetails;
 
   const user = await connectedusercollection.create({
-    userId: userdetails.userId,
+    userId: userdetails.userid,
     socketId,
   });
 };
