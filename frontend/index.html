@@ -61,7 +61,7 @@
     </form>
 
 
-    <form action="">
+    <form action="" method="post">
         <h2>Request for shipping</h2>
         <input type="text" name="address" id="address" placeholder="address">
         <input type="text" name="destaddress" id="destaddress" placeholder="destination address">
@@ -88,7 +88,7 @@
 
         loginbutton.addEventListener("click", async (event) => {
             try {
-                event.preventDefault()
+                event.preventDefault();
                 const res = await fetch("http://localhost:3002/v1/auth/login", {
                     method: "POST",
                     headers: {
@@ -107,6 +107,18 @@
                 alert("An error occurred!");
                 console.log(error);
             }
+        })
+
+        shippingbutton.addEventListener('submit', (e) => {
+            e.preventDefault();
+            socket.emit('shppings', {
+                address: address.value,
+                destaddress: destaddress.value,
+                itemweight: itemweight.value,
+                itemcost: itemcost.value,
+                shippingrequest: shippingrequest.value
+            })
+
         })
     </script>
 </body>

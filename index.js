@@ -45,6 +45,9 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   console.log("a user connected");
+  socket.on("shppings", (msg) => {
+    console.log({ msg });
+  });
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
