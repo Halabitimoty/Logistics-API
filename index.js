@@ -16,6 +16,7 @@ const port = process.env.PORT || 3000;
 const database = mongoose.connect(process.env.MONGO_DB_URL);
 
 const authroute = require("./app/routes/auth.route");
+const { log } = require("node:console");
 // const { usersocket } = require("./app/middlewares/middleware");
 
 database
@@ -44,6 +45,9 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   console.log("a user connected");
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
 });
 
 httpserver.listen(port, () => {
