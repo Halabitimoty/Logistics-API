@@ -8,13 +8,13 @@ const { registerval } = require("../../schemas/joischema/auth.schema.val");
 const register = async (req, res) => {
   try {
     const { fullname, email, password } = req.body;
-    const { role } = req.header;
+    const { role } = req.role;
 
     await registerval.validateAsync({
       fullname,
       email,
       password,
-      role: role.toLowerCase(),
+      role,
     });
 
     const isUserPresent = await usercollection
