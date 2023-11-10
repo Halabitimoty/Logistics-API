@@ -88,6 +88,10 @@
         const loginbutton = document.querySelector("#login-button");
         const message = document.querySelector("#message");
 
+        socket.on("connect", () => {
+            console.log("connected to server");
+        });
+
         loginbutton.addEventListener("click", async (event) => {
             try {
                 event.preventDefault();
@@ -123,11 +127,7 @@
             })
 
         })
-        socket.on('shppings', (msg) => {
-            const serve = document.createElement("li");
-            serve.textContent = msg;
-            message.appendChild(serve)
-        })
+
     </script>
 </body>
 
