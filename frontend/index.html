@@ -76,7 +76,9 @@
     </form>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script>
-        const socket = io();
+        const socket = io("http://localhost:3002", {
+            extraHeaders: { auth: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NTRjOGJlMjFkZTZmYjVhNzYxZmM0NmEiLCJpYXQiOjE2OTk1NDUwMzl9.UxamSzs7beRUxnyNO2HRgNxVyjONI6P6Bc6-VKN_BAI" }
+        });
         const login = document.querySelector("#login");
         const password = document.querySelector("#password");
         const address = document.querySelector("#address");
@@ -99,9 +101,8 @@
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "auth": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NTRjOGJlMjFkZTZmYjVhNzYxZmM0NmEiLCJpYXQiOjE2OTk1NDUwMzl9.UxamSzs7beRUxnyNO2HRgNxVyjONI6P6Bc6-VKN_BAI"
                     }, body: JSON.stringify({
-                        email: email.value,
+                        email: login.value,
                         password: password.value
                     })
 

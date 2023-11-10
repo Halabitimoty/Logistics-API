@@ -20,8 +20,10 @@ const { usersocket } = require("./app/middlewares/usersocket");
 const {
   connecteduser,
   sendmessage,
-  disconnecteduser,
 } = require("./app/controllers/socket/connectedusersocket");
+const {
+  connectedusercollection,
+} = require("./app/schemas/connecteduserschema");
 
 database
   .then(() => {
@@ -33,7 +35,7 @@ database
 
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:3002",
   })
 );
 app.use(logger("dev"));
@@ -48,11 +50,14 @@ app.get("/", (req, res) => {
 
 io.use(usersocket);
 io.on("connection", async (socket) => {
+  const id = socket.id;
   connecteduser(socket);
   sendmessage(socket);
 
-  socket.on("disconnect", (socket) => {
-    console.log("user disconnected");
+  socket.on("disconnect", async () => {
+    await connectedusercollection.findOneAndDelete({
+      socketId: id,
+    });
   });
 });
 

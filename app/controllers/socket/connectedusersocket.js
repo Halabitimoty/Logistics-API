@@ -35,6 +35,7 @@ const sendmessage = (socket) => {
 };
 
 const disconnecteduser = async (params) => {
+  console.log(params);
   await connectedusercollection.findOneAndDelete({
     socketId: params,
   });
