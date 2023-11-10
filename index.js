@@ -53,6 +53,10 @@ io.on("connection", async (socket) => {
   const id = socket.id;
   connecteduser(socket);
   sendmessage(socket);
+  socket.on("requestshipping", (message, callback) => {
+    console.log(message);
+    callback("sent");
+  });
 
   socket.on("disconnect", async () => {
     await connectedusercollection.findOneAndDelete({

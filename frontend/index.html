@@ -113,19 +113,18 @@
                 console.log(data)
             } catch (error) {
                 alert("An error occurred!");
-                console.log(error);
             }
         })
 
         shippingbutton.addEventListener('submit', (e) => {
             e.preventDefault();
-            socket.emit('shppings', {
+            socket.emit('requestshipping', {
                 address: address.value,
                 destaddress: destaddress.value,
                 itemweight: itemweight.value,
                 itemcost: itemcost.value,
                 shippingrequest: shippingrequest.value
-            })
+            }, function () { })
 
         })
 
