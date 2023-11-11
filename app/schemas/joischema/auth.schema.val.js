@@ -22,4 +22,9 @@ const serviceval = Joi.object({
     .required(),
 });
 
-module.exports = { registerval, loginval, serviceval };
+const shippingval = Joi.object({
+  shippingrequest: Joi.string()
+    .allow("pending", "in-transit", "delivered")
+    .required(),
+});
+module.exports = { registerval, loginval, serviceval, shippingval };

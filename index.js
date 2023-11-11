@@ -25,7 +25,10 @@ const {
   connectedusercollection,
 } = require("./app/schemas/connecteduserschema");
 const { servicecollection } = require("./app/schemas/service.schema");
-const { serviceval } = require("./app/schemas/joischema/auth.schema.val");
+const {
+  serviceval,
+  shippingval,
+} = require("./app/schemas/joischema/auth.schema.val");
 
 database
   .then(() => {
@@ -79,13 +82,19 @@ io.on("connection", async (socket) => {
     });
     callback("sent");
   });
-  const notification = async () => {
+
+  socket.on("shippingupdate", async (message) => {
+    const { shippingrequest } = message;
+    await shippingval.validateAsync({ shippingrequest });
+    await servicecollection.findByIdAndUpdate(id, { shippingrequest });
+  });
+
+  socket.emit("notification", async (req, res) => {
     const notification = await servicecollection.find({
       customerId: userdetails.userid,
     });
-    return notification.toString();
-  };
-  socket.emit("notification", notification);
+    res.send(notification);
+  });
 
   socket.on("disconnect", async () => {
     await connectedusercollection.findOneAndDelete({
