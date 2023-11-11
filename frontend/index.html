@@ -59,11 +59,14 @@
         <input type="password" name="password" id="password" placeholder="********">
         <button id="login-button">Login</button>
     </form>
-
-
     <form action="">
+        <button id="notification-button">notification</button>
+    </form>
+
+    <form action="" method="post">
+
         <h2>Request for shipping</h2>
-        <p id="message" style="color: #fff;">hiiii</p>
+        <p id="message" style="color: #fff;"></p>
         <input type="text" name="address" id="address" placeholder="address">
         <input type="text" name="destaddress" id="destaddress" placeholder="destination address">
         <input type="number" name="item-weight" id="item-weight" placeholder="item weight">
@@ -84,11 +87,12 @@
         const address = document.querySelector("#address");
         const destaddress = document.querySelector("#destaddress");
         const itemweight = document.querySelector("#item-weight");
-        const itemcost = document.querySelector("#item-cost");
+        const shippingcost = document.querySelector("#item-cost");
         const shippingrequest = document.querySelector("#shipping-request");
         const shippingbutton = document.querySelector("#shipping-button");
         const loginbutton = document.querySelector("#login-button");
         const message = document.querySelector("#message");
+        const notificationbutton = document.querySelector("#notification-button")
 
         socket.on("connect", () => {
             console.log("connected to server");
@@ -116,16 +120,24 @@
             }
         })
 
-        shippingbutton.addEventListener('submit', (e) => {
+        shippingbutton.addEventListener('click', async (e) => {
             e.preventDefault();
             socket.emit('requestshipping', {
                 address: address.value,
                 destaddress: destaddress.value,
                 itemweight: itemweight.value,
-                itemcost: itemcost.value,
+                shippingcost: shippingcost.value,
                 shippingrequest: shippingrequest.value
             }, function () { })
 
+        })
+
+        notificationbutton.addEventListener("click", async (event) => {
+            console.log("clicked");
+            event.preventDefault();
+            socket.on("notification", (message) => {
+                console.log(message);
+            })
         })
 
     </script>

@@ -31,7 +31,7 @@ const serviceshema = new mongoose.Schema(
     },
     shippingrequest: {
       type: String,
-      enum: ["pending", "submitted"],
+      enum: ["pending", "in-transit", "delivered"],
       default: "pending",
     },
   },

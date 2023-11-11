@@ -12,4 +12,14 @@ const loginval = Joi.object({
   password: Joi.string().min(6).max(40).required(),
 });
 
-module.exports = { registerval, loginval };
+const serviceval = Joi.object({
+  address: Joi.string().min(6).max(60).required(),
+  destaddress: Joi.string().min(6).max(60).required(),
+  itemweight: Joi.number().required(),
+  shippingcost: Joi.number().required(),
+  shippingrequest: Joi.string()
+    .allow("pending", "in-transit", "delivered")
+    .required(),
+});
+
+module.exports = { registerval, loginval, serviceval };
