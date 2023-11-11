@@ -135,9 +135,10 @@
         notificationbutton.addEventListener("click", async (event) => {
             console.log("clicked");
             event.preventDefault();
-            socket.on("notification", (message) => {
-                console.log(message);
-            })
+
+        });
+        socket.on("notification", (message) => {
+            console.log(message);
         })
 
     </script>

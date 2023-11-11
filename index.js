@@ -79,15 +79,13 @@ io.on("connection", async (socket) => {
     });
     callback("sent");
   });
-
-  socket.emit("notification", async () => {
-    console.log(userdetails.userid);
+  const notification = async () => {
     const notification = await servicecollection.find({
       customerId: userdetails.userid,
     });
-    console.log(notification);
-    return { notification };
-  });
+    return notification.toString();
+  };
+  socket.emit("notification", notification);
 
   socket.on("disconnect", async () => {
     await connectedusercollection.findOneAndDelete({
