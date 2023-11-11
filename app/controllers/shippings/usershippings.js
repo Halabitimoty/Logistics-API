@@ -5,7 +5,7 @@ const getusershippings = async (req, res) => {
     const { userid } = req.decoded;
 
     const data = await servicecollection.find({ customerId: userid });
-
+    console.log(data);
     res.status(200).send({
       success: true,
       message: "all user tasks fetched successfully",
