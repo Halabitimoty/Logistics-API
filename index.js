@@ -112,8 +112,8 @@ io.on("connection", async (socket) => {
       const allsocketsemit = allsockets.map((socketId) => {
         return socketId.socketId;
       });
-      console.log(socketId);
-      socket.to(allsocketsemit).emit("new-message", {
+
+      socket.to(allsocketsemit).emit("shippingupdate", {
         message: "ordered updated or delivered",
       });
 
