@@ -61,61 +61,82 @@ io.on("connection", async (socket) => {
   connecteduser(socket);
   sendmessage(socket);
   socket.on("requestshipping", async (message, callback) => {
-    const { address, destaddress, itemweight, shippingcost, shippingrequest } =
-      message;
+    try {
+      const {
+        address,
+        destaddress,
+        itemweight,
+        shippingcost,
+        shippingrequest,
+      } = message;
 
-    await serviceval.validateAsync({
-      address,
-      destaddress,
-      itemweight,
-      shippingcost,
-      shippingrequest,
-    });
+      await serviceval.validateAsync({
+        address,
+        destaddress,
+        itemweight,
+        shippingcost,
+        shippingrequest,
+      });
 
-    await servicecollection.create({
-      customerId: userdetails.userid,
-      address,
-      destaddress,
-      itemweight,
-      shippingcost,
-      shippingrequest,
-    });
-    callback("sent");
+      await servicecollection.create({
+        customerId: userdetails.userid,
+        address,
+        destaddress,
+        itemweight,
+        shippingcost,
+        shippingrequest,
+      });
+      callback("sent");
+    } catch (error) {
+      console.log("shipping request internal server error.");
+    }
   });
 
   socket.on("shippingupdate", async (message, callback) => {
-    const { shippingrequest, shippingId } = message;
+    try {
+      const { shippingrequest, shippingId } = message;
 
-    await shippingval.validateAsync({ shippingrequest });
-    const riderId = userdetails.userid;
+      await shippingval.validateAsync({ shippingrequest });
+      const riderId = userdetails.userid;
 
-    await servicecollection.findByIdAndUpdate(
-      { _id: shippingId },
-      {
-        shippingrequest,
-        riderId,
-      }
-    );
+      await servicecollection.findByIdAndUpdate(
+        { _id: shippingId },
+        {
+          shippingrequest,
+          riderId,
+        }
+      );
 
-    socket.to(id).emit("customer-message", {
-      message: "ordered updated or delivered",
-    });
+      socket.to(id).emit("customer-message", {
+        message: "ordered updated or delivered",
+      });
 
-    callback("updated");
+      callback("updated");
+    } catch (error) {
+      console.log("shipping update internal server error.");
+    }
   });
 
   socket.on("customer-shippings", async ({}, callback) => {
-    const data = await servicecollection.find({
-      customerId: userdetails.userid,
-    });
-    callback(data);
+    try {
+      const data = await servicecollection.find({
+        customerId: userdetails.userid,
+      });
+      callback(data);
+    } catch (error) {
+      console.log("customer shippings internal server error.");
+    }
   });
 
   socket.on("rider-notification", async ({}, callback) => {
-    const data = await servicecollection.find({
-      customerId: riderId.userid,
-    });
-    callback(data);
+    try {
+      const data = await servicecollection.find({
+        customerId: riderId.userid,
+      });
+      callback(data);
+    } catch (error) {
+      console.log("rider notification internal server error.");
+    }
   });
 
   socket.on("disconnect", async () => {
