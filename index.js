@@ -107,7 +107,7 @@ io.on("connection", async (socket) => {
         }
       );
 
-      socket.to(id).emit("customer-message", {
+      socket.emit("customer-message", {
         message: "ordered updated or delivered",
       });
 
