@@ -83,16 +83,39 @@ io.on("connection", async (socket) => {
     callback("sent");
   });
 
-  socket.on("shippingupdate", async (message) => {
-    const { shippingrequest } = message;
+  socket.on("shippingupdate", async (message, callback) => {
+    const { shippingrequest, shippingId } = message;
+
     await shippingval.validateAsync({ shippingrequest });
-    await servicecollection.findByIdAndUpdate(id, { shippingrequest });
+    const riderId = userdetails.userid;
+
+    await servicecollection.findByIdAndUpdate(
+      { _id: shippingId },
+      {
+        shippingrequest,
+        riderId,
+      }
+    );
+
+    socket.to(id).emit("customer-message", {
+      message: "ordered updated or delivered",
+    });
+
+    callback("updated");
   });
 
-  socket.emit("notification", async () => {
-    const data = await servicecollection.find();
-    console.log(data);
-    return data;
+  socket.on("customer-shippings", async ({}, callback) => {
+    const data = await servicecollection.find({
+      customerId: userdetails.userid,
+    });
+    callback(data);
+  });
+
+  socket.on("rider-notification", async ({}, callback) => {
+    const data = await servicecollection.find({
+      customerId: riderId.userid,
+    });
+    callback(data);
   });
 
   socket.on("disconnect", async () => {
