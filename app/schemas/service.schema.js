@@ -13,6 +13,10 @@ const serviceshema = new mongoose.Schema(
       ref: "user",
       default: null,
     },
+    socketId: {
+      type: String,
+      required: true,
+    },
     address: {
       type: String,
       required: true,

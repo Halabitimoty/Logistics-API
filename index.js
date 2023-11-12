@@ -80,6 +80,7 @@ io.on("connection", async (socket) => {
 
       await servicecollection.create({
         customerId: userdetails.userid,
+        socketId: id,
         address,
         destaddress,
         itemweight,
@@ -94,10 +95,12 @@ io.on("connection", async (socket) => {
 
   socket.on("shippingupdate", async (message, callback) => {
     try {
-      const { shippingrequest, shippingId } = message;
+      const { shippingrequest, shippingId, socketId } = message;
 
       await shippingval.validateAsync({ shippingrequest });
       const riderId = userdetails.userid;
+
+      const allsockets = await servicecollection.find({ socketId });
 
       await servicecollection.findByIdAndUpdate(
         { _id: shippingId },
@@ -106,8 +109,11 @@ io.on("connection", async (socket) => {
           riderId,
         }
       );
-
-      socket.emit("customer-message", {
+      const allsocketsemit = allsockets.map((socketId) => {
+        return socketId.socketId;
+      });
+      console.log(socketId);
+      socket.to(allsocketsemit).emit("new-message", {
         message: "ordered updated or delivered",
       });
 
