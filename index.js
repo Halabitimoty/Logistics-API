@@ -119,7 +119,7 @@ io.on("connection", async (socket) => {
       });
 
       socket.to(allsocketsemit).emit("status", {
-        message: "ordered updated or delivered",
+        message: "order updated!!!",
       });
 
       callback("updated");
